@@ -105,8 +105,8 @@
 
       .headline,
       .subtitle,
-      .divider,
       .line,
+      .cta-wrap,
       .cta {
         opacity: 0;
         transform: translateY(14px);
@@ -132,46 +132,39 @@
         animation-delay: 180ms;
       }
 
-      .divider {
-        width: min(100%, 220px);
-        height: 1px;
-        background: var(--line);
-        margin: 34px 0 26px;
-        animation-delay: 280ms;
-      }
-
-      .line-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 18px 24px;
-        align-items: center;
-      }
-
       .line {
         margin: 0;
         color: var(--muted);
         font-size: 1rem;
+        animation-delay: 280ms;
+      }
+
+      .cta-wrap {
+        margin-top: clamp(40px, 7vh, 64px);
         animation-delay: 380ms;
       }
 
       .cta {
         appearance: none;
         min-height: 48px;
-        border: 1px solid var(--text);
-        background: var(--text);
-        color: var(--bg);
-        padding: 14px 22px;
-        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--text);
+        padding: 14px 28px;
+        border-radius: 2px;
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
         cursor: pointer;
-        transition: transform 180ms ease, background 180ms ease, color 180ms ease;
-        animation-delay: 480ms;
+        transition: border-color 260ms ease, background 260ms ease;
+        animation-delay: 380ms;
       }
 
       .cta:hover,
       .cta:focus-visible {
-        transform: translateY(-1px);
-        background: var(--bg);
-        color: var(--text);
+        border-color: var(--text);
+        background: rgba(38, 37, 31, 0.04);
+        transform: none;
       }
 
       .cta:focus-visible,
@@ -315,10 +308,6 @@
         .modal-panel {
           padding: 24px 18px 20px;
         }
-
-        .line-row {
-          align-items: stretch;
-        }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -332,8 +321,8 @@
 
         .headline,
         .subtitle,
-        .divider,
         .line,
+        .cta-wrap,
         .cta {
           opacity: 1;
           transform: none;
@@ -353,11 +342,10 @@
           <p class="subtitle" id="subtitle" data-i18n="subtitle">
             Um dos domínios de educação mais valiosos da língua portuguesa.
           </p>
-          <div class="divider" aria-hidden="true"></div>
-          <div class="line-row">
-            <p class="line" id="line" data-i18n="line">
-              Disponível para aquisição ou parceria estratégica.
-            </p>
+          <p class="line" id="line" data-i18n="line" style="margin-top:28px;">
+            Disponível para aquisição ou parceria estratégica.
+          </p>
+          <div class="cta-wrap">
             <button type="button" class="cta" id="openModal" data-i18n="cta">Fazer uma proposta</button>
           </div>
         </div>
@@ -371,7 +359,6 @@
         <div class="modal-top">
           <div>
             <h2 class="modal-title" id="modalTitle">Fazer uma proposta</h2>
-            <p class="modal-copy" id="modalCopy">Preencha os campos abaixo para iniciar a conversa.</p>
           </div>
           <button type="button" class="modal-close" id="closeModal" aria-label="Fechar">×</button>
         </div>
@@ -379,11 +366,11 @@
         <form id="offerForm" novalidate>
           <div class="form-grid">
             <div class="field">
-              <label for="name" id="labelName">Nome*</label>
+              <label for="name" id="labelName">Nome *</label>
               <input id="name" name="name" autocomplete="name" />
             </div>
             <div class="field">
-              <label for="email" id="labelEmail">E-mail corporativo*</label>
+              <label for="email" id="labelEmail">E-mail corporativo *</label>
               <input id="email" name="email" type="email" autocomplete="email" />
             </div>
             <div class="field">
@@ -391,7 +378,7 @@
               <input id="company" name="company" autocomplete="organization" />
             </div>
             <div class="field">
-              <label for="amount" id="labelAmount">Valor da proposta</label>
+              <label for="amount" id="labelAmount">Valor da proposta (opcional)</label>
               <input id="amount" name="amount" inputmode="text" />
             </div>
             <div class="field">
@@ -403,10 +390,14 @@
               <input id="website" name="website" tabindex="-1" autocomplete="off" />
             </div>
             <div class="error" id="formError" role="alert" aria-live="polite"></div>
-            <div class="success" id="formSuccess" role="status" aria-live="polite"></div>
-            <button type="submit" class="cta submit" id="submitButton">Enviar proposta</button>
+            <button type="submit" class="cta submit" id="submitButton">Enviar</button>
           </div>
         </form>
+
+        <div id="formSuccess" style="display:none;" role="status" aria-live="polite">
+          <p id="successMessage" style="color:var(--text-soft);font-size:0.98rem;margin:0 0 24px;"></p>
+          <button type="button" class="cta" id="closeAfterSuccess">Fechar</button>
+        </div>
       </div>
     </div>
 
@@ -427,14 +418,13 @@
             line: "Disponível para aquisição ou parceria estratégica.",
             cta: "Fazer uma proposta",
             modalTitle: "Fazer uma proposta",
-            modalCopy: "Preencha os campos abaixo para iniciar a conversa.",
             close: "Fechar",
-            name: "Nome*",
-            email: "E-mail corporativo*",
+            name: "Nome *",
+            email: "E-mail corporativo *",
             company: "Empresa",
-            amount: "Valor da proposta",
+            amount: "Valor da proposta (opcional)",
             message: "Mensagem",
-            submit: "Enviar proposta",
+            submit: "Enviar",
             success: "Proposta recebida. Retornaremos em breve.",
             errors: {
               name: "Informe seu nome.",
@@ -453,14 +443,13 @@
             line: "Available for acquisition or strategic partnership.",
             cta: "Make an offer",
             modalTitle: "Make an offer",
-            modalCopy: "Fill out the form below to start the conversation.",
             close: "Close",
-            name: "Name*",
-            email: "Corporate email*",
+            name: "Name *",
+            email: "Business email *",
             company: "Company",
-            amount: "Offer amount",
+            amount: "Offer amount (optional)",
             message: "Message",
-            submit: "Send offer",
+            submit: "Send",
             success: "Offer received. We'll be in touch.",
             errors: {
               name: "Please enter your name.",
@@ -478,7 +467,9 @@
         const langToggle = document.getElementById("langToggle");
         const form = document.getElementById("offerForm");
         const errorNode = document.getElementById("formError");
-        const successNode = document.getElementById("formSuccess");
+        const successPanel = document.getElementById("formSuccess");
+        const successMessage = document.getElementById("successMessage");
+        const closeAfterSuccess = document.getElementById("closeAfterSuccess");
         const submitButton = document.getElementById("submitButton");
         const fields = {
           name: document.getElementById("name"),
@@ -507,8 +498,8 @@
           document.getElementById("line").textContent = t.line;
           openModalButton.textContent = t.cta;
           document.getElementById("modalTitle").textContent = t.modalTitle;
-          document.getElementById("modalCopy").textContent = t.modalCopy;
           closeModalButton.setAttribute("aria-label", t.close);
+          closeAfterSuccess.textContent = t.close;
           document.getElementById("labelName").textContent = t.name;
           document.getElementById("labelEmail").textContent = t.email;
           document.getElementById("labelCompany").textContent = t.company;
@@ -516,14 +507,14 @@
           document.getElementById("labelMessage").textContent = t.message;
           submitButton.textContent = t.submit;
           errorNode.textContent = "";
-          successNode.textContent = "";
         }
 
         function openModal() {
           modal.classList.add("open");
           modal.setAttribute("aria-hidden", "false");
+          form.style.display = "";
+          successPanel.style.display = "none";
           errorNode.textContent = "";
-          successNode.textContent = "";
           setTimeout(() => fields.name.focus(), 0);
         }
 
@@ -553,16 +544,23 @@
           return true;
         }
 
+        function showSuccess() {
+          const t = copy[currentLang];
+          successMessage.textContent = t.success;
+          form.style.display = "none";
+          successPanel.style.display = "";
+          closeAfterSuccess.focus();
+        }
+
         async function submitOffer(event) {
           event.preventDefault();
-          successNode.textContent = "";
 
           if (!validate()) return;
 
           const t = copy[currentLang];
 
           if (fields.website.value.trim() !== "") {
-            successNode.textContent = t.success;
+            showSuccess();
             form.reset();
             return;
           }
@@ -574,10 +572,11 @@
             amount: fields.amount.value.trim(),
             message: fields.message.value.trim(),
             lang: currentLang,
+            website: "",
           };
 
           if (!window.AULAS_ENDPOINT) {
-            successNode.textContent = t.success;
+            showSuccess();
             form.reset();
             return;
           }
@@ -596,7 +595,7 @@
               throw new Error("request failed");
             }
 
-            successNode.textContent = t.success;
+            showSuccess();
             form.reset();
           } catch (_error) {
             errorNode.textContent = t.errors.server;
@@ -607,6 +606,7 @@
 
         openModalButton.addEventListener("click", openModal);
         closeModalButton.addEventListener("click", closeModal);
+        closeAfterSuccess.addEventListener("click", closeModal);
         langToggle.addEventListener("click", () => applyLanguage(currentLang === "pt" ? "en" : "pt"));
         modal.addEventListener("click", (event) => {
           if (event.target === modal) closeModal();

@@ -10,7 +10,13 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
 
   try {
-    const { name, email, company, amount, message, lang } = await req.json();
+    const { name, email, company, amount, message, lang, website } = await req.json();
+
+    if (website && typeof website === "string" && website.trim() !== "") {
+      return new Response(JSON.stringify({ ok: true }), {
+        headers: { ...CORS, "Content-Type": "application/json" },
+      });
+    }
 
     if (!name || typeof name !== "string" || name.trim().length === 0) {
       return new Response(JSON.stringify({ error: "name required" }), {
