@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>aulas.com — domínio premium disponível para aquisição</title>
+    <meta
+      name="description"
+      content="aulas.com, domínio .com de palavra genérica em português no setor de educação. Aberto a propostas de aquisição ou parceria estratégica."
+    />
+    <meta property="og:title" content="aulas.com — domínio premium disponível para aquisição" />
+    <meta
+      property="og:description"
+      content="aulas.com, domínio .com de palavra genérica em português no setor de educação. Aberto a propostas de aquisição ou parceria estratégica."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aulas.com/" />
+    <meta property="og:image" content="/og.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://aulas.com/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=Playfair+Display:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #faf9f6;
+        --text: #26251f;
+        --text-strong: #1f1e19;
+        --text-soft: #3a382f;
+        --muted: #8c897c;
+        --muted-2: #a9a69a;
+        --line: #c9c6b9;
+        --line-2: #d8d5c9;
+        --surface: #e4e1d6;
+        --shadow: rgba(38, 37, 31, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inter Tight", Arial, sans-serif;
+      }
+
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        padding: 20px;
+      }
+
+      .header,
+      .footer {
+        display: flex;
+        align-items: center;
+      }
+
+      .header {
+        justify-content: flex-end;
+      }
+
+      .footer {
+        padding-top: 24px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .lang-toggle {
+        min-height: 48px;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        cursor: pointer;
+        padding: 10px 12px;
+      }
+
+      .hero {
+        display: grid;
+        align-content: center;
+      }
+
+      .hero-inner {
+        width: min(100%, 920px);
+      }
+
+      .headline,
+      .subtitle,
+      .divider,
+      .line,
+      .cta {
+        opacity: 0;
+        transform: translateY(14px);
+        animation: rise 900ms cubic-bezier(.22,.61,.36,1) forwards;
+      }
+
+      .headline {
+        margin: 0;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(52px, 13vw, 154px);
+        line-height: 0.98;
+        letter-spacing: -0.02em;
+        color: var(--text-strong);
+        animation-delay: 80ms;
+      }
+
+      .subtitle {
+        margin: 24px 0 0;
+        max-width: 720px;
+        font-size: clamp(1.15rem, 2.1vw, 1.65rem);
+        line-height: 1.45;
+        color: var(--text-soft);
+        animation-delay: 180ms;
+      }
+
+      .divider {
+        width: min(100%, 220px);
+        height: 1px;
+        background: var(--line);
+        margin: 34px 0 26px;
+        animation-delay: 280ms;
+      }
+
+      .line-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px 24px;
+        align-items: center;
+      }
+
+      .line {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1rem;
+        animation-delay: 380ms;
+      }
+
+      .cta {
+        appearance: none;
+        min-height: 48px;
+        border: 1px solid var(--text);
+        background: var(--text);
+        color: var(--bg);
+        padding: 14px 22px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+        animation-delay: 480ms;
+      }
+
+      .cta:hover,
+      .cta:focus-visible {
+        transform: translateY(-1px);
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .cta:focus-visible,
+      .lang-toggle:focus-visible,
+      .modal-close:focus-visible {
+        outline: 2px solid var(--text);
+        outline-offset: 3px;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(250, 249, 246, 0.7);
+        backdrop-filter: blur(4px);
+      }
+
+      .modal.open {
+        display: flex;
+      }
+
+      .modal-panel {
+        width: min(100%, 640px);
+        background: rgba(250, 249, 246, 0.96);
+        border: 1px solid var(--line-2);
+        box-shadow: 0 24px 80px var(--shadow);
+        padding: 28px 22px 24px;
+      }
+
+      .modal-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .modal-title {
+        margin: 0;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        color: var(--text-strong);
+      }
+
+      .modal-close {
+        min-height: 48px;
+        min-width: 48px;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 1.8rem;
+        line-height: 1;
+        padding: 0;
+      }
+
+      .modal-copy {
+        margin: 10px 0 24px;
+        color: var(--muted);
+      }
+
+      .form-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+
+      .field label {
+        color: var(--text-soft);
+        font-size: 0.96rem;
+      }
+
+      .field input,
+      .field textarea {
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        background: transparent;
+        border-radius: 0;
+        padding: 12px 0;
+        color: var(--text-strong);
+      }
+
+      .field textarea {
+        min-height: 108px;
+        resize: vertical;
+      }
+
+      .field input:focus,
+      .field textarea:focus {
+        outline: none;
+        border-bottom-color: var(--text);
+      }
+
+      .error {
+        min-height: 20px;
+        color: #7a2f28;
+        font-size: 0.94rem;
+      }
+
+      .success {
+        min-height: 24px;
+        color: var(--text-soft);
+        font-size: 0.98rem;
+      }
+
+      .submit {
+        justify-self: start;
+      }
+
+      .hp {
+        position: absolute;
+        left: -9999px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          padding: 16px;
+        }
+
+        .hero {
+          align-content: start;
+          padding-top: 10vh;
+        }
+
+        .modal-panel {
+          padding: 24px 18px 20px;
+        }
+
+        .line-row {
+          align-items: stretch;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+
+        .headline,
+        .subtitle,
+        .divider,
+        .line,
+        .cta {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <button type="button" class="lang-toggle" id="langToggle" aria-label="Toggle language">EN</button>
+      </header>
+
+      <main class="hero">
+        <div class="hero-inner">
+          <h1 class="headline" data-i18n="headline">aulas.com</h1>
+          <p class="subtitle" id="subtitle" data-i18n="subtitle">
+            Um dos domínios de educação mais valiosos da língua portuguesa.
+          </p>
+          <div class="divider" aria-hidden="true"></div>
+          <div class="line-row">
+            <p class="line" id="line" data-i18n="line">
+              Disponível para aquisição ou parceria estratégica.
+            </p>
+            <button type="button" class="cta" id="openModal" data-i18n="cta">Fazer uma proposta</button>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer">© 2026 aulas.com</footer>
+    </div>
+
+    <div class="modal" id="modal" aria-hidden="true">
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-top">
+          <div>
+            <h2 class="modal-title" id="modalTitle">Fazer uma proposta</h2>
+            <p class="modal-copy" id="modalCopy">Preencha os campos abaixo para iniciar a conversa.</p>
+          </div>
+          <button type="button" class="modal-close" id="closeModal" aria-label="Fechar">×</button>
+        </div>
+
+        <form id="offerForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="name" id="labelName">Nome*</label>
+              <input id="name" name="name" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="email" id="labelEmail">E-mail corporativo*</label>
+              <input id="email" name="email" type="email" autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="company" id="labelCompany">Empresa</label>
+              <input id="company" name="company" autocomplete="organization" />
+            </div>
+            <div class="field">
+              <label for="amount" id="labelAmount">Valor da proposta</label>
+              <input id="amount" name="amount" inputmode="text" />
+            </div>
+            <div class="field">
+              <label for="message" id="labelMessage">Mensagem</label>
+              <textarea id="message" name="message"></textarea>
+            </div>
+            <div class="field hp" aria-hidden="true">
+              <label for="website">Website</label>
+              <input id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+            <div class="error" id="formError" role="alert" aria-live="polite"></div>
+            <div class="success" id="formSuccess" role="status" aria-live="polite"></div>
+            <button type="submit" class="cta submit" id="submitButton">Enviar proposta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      window.AULAS_ENDPOINT = "";
+    </script>
+    <script>
+      (() => {
+        const copy = {
+          pt: {
+            lang: "pt-BR",
+            toggle: "EN",
+            title: "aulas.com — domínio premium disponível para aquisição",
+            description:
+              "aulas.com, domínio .com de palavra genérica em português no setor de educação. Aberto a propostas de aquisição ou parceria estratégica.",
+            headline: "aulas.com",
+            subtitle: "Um dos domínios de educação mais valiosos da língua portuguesa.",
+            line: "Disponível para aquisição ou parceria estratégica.",
+            cta: "Fazer uma proposta",
+            modalTitle: "Fazer uma proposta",
+            modalCopy: "Preencha os campos abaixo para iniciar a conversa.",
+            close: "Fechar",
+            name: "Nome*",
+            email: "E-mail corporativo*",
+            company: "Empresa",
+            amount: "Valor da proposta",
+            message: "Mensagem",
+            submit: "Enviar proposta",
+            success: "Proposta recebida. Retornaremos em breve.",
+            errors: {
+              name: "Informe seu nome.",
+              email: "Informe um e-mail válido.",
+              server: "Não foi possível enviar sua proposta agora.",
+            },
+          },
+          en: {
+            lang: "en",
+            toggle: "PT",
+            title: "aulas.com — premium domain available for acquisition",
+            description:
+              "aulas.com, a premium .com generic-word domain in Portuguese for the education sector. Open to acquisition offers or strategic partnership discussions.",
+            headline: "aulas.com",
+            subtitle: "One of the most valuable education domains in the Portuguese language.",
+            line: "Available for acquisition or strategic partnership.",
+            cta: "Make an offer",
+            modalTitle: "Make an offer",
+            modalCopy: "Fill out the form below to start the conversation.",
+            close: "Close",
+            name: "Name*",
+            email: "Corporate email*",
+            company: "Company",
+            amount: "Offer amount",
+            message: "Message",
+            submit: "Send offer",
+            success: "Offer received. We'll be in touch.",
+            errors: {
+              name: "Please enter your name.",
+              email: "Please enter a valid email.",
+              server: "We couldn't send your offer right now.",
+            },
+          },
+        };
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const root = document.documentElement;
+        const modal = document.getElementById("modal");
+        const openModalButton = document.getElementById("openModal");
+        const closeModalButton = document.getElementById("closeModal");
+        const langToggle = document.getElementById("langToggle");
+        const form = document.getElementById("offerForm");
+        const errorNode = document.getElementById("formError");
+        const successNode = document.getElementById("formSuccess");
+        const submitButton = document.getElementById("submitButton");
+        const fields = {
+          name: document.getElementById("name"),
+          email: document.getElementById("email"),
+          company: document.getElementById("company"),
+          amount: document.getElementById("amount"),
+          message: document.getElementById("message"),
+          website: document.getElementById("website"),
+        };
+        const metaDescription = document.querySelector('meta[name="description"]');
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        const ogDescription = document.querySelector('meta[property="og:description"]');
+        let currentLang = "pt";
+
+        function applyLanguage(lang) {
+          currentLang = lang;
+          const t = copy[lang];
+          root.lang = t.lang;
+          document.title = t.title;
+          metaDescription.setAttribute("content", t.description);
+          ogTitle.setAttribute("content", t.title);
+          ogDescription.setAttribute("content", t.description);
+          langToggle.textContent = t.toggle;
+          langToggle.setAttribute("aria-label", `Switch language to ${lang === "pt" ? "English" : "Portuguese"}`);
+          document.getElementById("subtitle").textContent = t.subtitle;
+          document.getElementById("line").textContent = t.line;
+          openModalButton.textContent = t.cta;
+          document.getElementById("modalTitle").textContent = t.modalTitle;
+          document.getElementById("modalCopy").textContent = t.modalCopy;
+          closeModalButton.setAttribute("aria-label", t.close);
+          document.getElementById("labelName").textContent = t.name;
+          document.getElementById("labelEmail").textContent = t.email;
+          document.getElementById("labelCompany").textContent = t.company;
+          document.getElementById("labelAmount").textContent = t.amount;
+          document.getElementById("labelMessage").textContent = t.message;
+          submitButton.textContent = t.submit;
+          errorNode.textContent = "";
+          successNode.textContent = "";
+        }
+
+        function openModal() {
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+          errorNode.textContent = "";
+          successNode.textContent = "";
+          setTimeout(() => fields.name.focus(), 0);
+        }
+
+        function closeModal() {
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+          openModalButton.focus();
+        }
+
+        function validate() {
+          const t = copy[currentLang];
+          const name = fields.name.value.trim();
+          const email = fields.email.value.trim();
+
+          if (!name) {
+            errorNode.textContent = t.errors.name;
+            fields.name.focus();
+            return false;
+          }
+          if (!emailPattern.test(email)) {
+            errorNode.textContent = t.errors.email;
+            fields.email.focus();
+            return false;
+          }
+
+          errorNode.textContent = "";
+          return true;
+        }
+
+        async function submitOffer(event) {
+          event.preventDefault();
+          successNode.textContent = "";
+
+          if (!validate()) return;
+
+          const t = copy[currentLang];
+
+          if (fields.website.value.trim() !== "") {
+            successNode.textContent = t.success;
+            form.reset();
+            return;
+          }
+
+          const payload = {
+            name: fields.name.value.trim(),
+            email: fields.email.value.trim(),
+            company: fields.company.value.trim(),
+            amount: fields.amount.value.trim(),
+            message: fields.message.value.trim(),
+            lang: currentLang,
+          };
+
+          if (!window.AULAS_ENDPOINT) {
+            successNode.textContent = t.success;
+            form.reset();
+            return;
+          }
+
+          submitButton.disabled = true;
+
+          try {
+            const response = await fetch(window.AULAS_ENDPOINT, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            const result = await response.json().catch(() => ({}));
+
+            if (!response.ok || !result.ok) {
+              throw new Error("request failed");
+            }
+
+            successNode.textContent = t.success;
+            form.reset();
+          } catch (_error) {
+            errorNode.textContent = t.errors.server;
+          } finally {
+            submitButton.disabled = false;
+          }
+        }
+
+        openModalButton.addEventListener("click", openModal);
+        closeModalButton.addEventListener("click", closeModal);
+        langToggle.addEventListener("click", () => applyLanguage(currentLang === "pt" ? "en" : "pt"));
+        modal.addEventListener("click", (event) => {
+          if (event.target === modal) closeModal();
+        });
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && modal.classList.contains("open")) {
+            closeModal();
+          }
+        });
+        form.addEventListener("submit", submitOffer);
+
+        applyLanguage("pt");
+      })();
+    </script>
+  </body>
+</html>
